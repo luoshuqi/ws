@@ -1,0 +1,43 @@
+<html lang="zh">
+<head>
+    <title>example - echo</title>
+</head>
+<body>
+<div>
+    <input id="msg" placeholder="输入要发送的内容">
+    <button disabled id="send">发送</button>
+</div>
+<div style="margin-top: 20px">
+    <div><span>收到的回复(服务端每2秒会发送一次时间戳):</span></div>
+    <textarea cols=80" id="reply" readonly rows="20"></textarea>
+</div>
+
+<script>
+    let send = document.getElementById("send");
+    let msg = document.getElementById("msg");
+    let reply = document.getElementById("reply");
+
+    let ws = new WebSocket("ws://" + location.host + "/ws");
+    ws.onerror = e => {
+        console.error(e);
+        alert('连接出错');
+    }
+    ws.onclose = e => {
+        console.log(e);
+        alert('连接关闭');
+        send.disabled = true;
+    }
+    ws.onopen = () => {
+        send.disabled = false;
+    }
+    ws.onmessage = e => {
+        reply.value = reply.value + e.data + "\n";
+    }
+
+    send.addEventListener('click', () => {
+        ws.send(msg.value);
+    })
+
+</script>
+</body>
+</html>
