@@ -10,7 +10,7 @@ pub const OK: Status = Status(200, "OK");
 pub const BAD_REQUEST: Status = Status(400, "Bad Request");
 pub const NOT_FOUND: Status = Status(404, "Not Found");
 
-pub struct Status(u16, &'static str);
+pub struct Status(pub u16, pub &'static str);
 
 pub struct Response<'a, T: AsyncRead + Unpin> {
     status: Status,
