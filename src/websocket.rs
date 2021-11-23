@@ -65,6 +65,21 @@ impl<'a> Message<'a> {
     }
 
     #[inline]
+    pub fn text(payload: &'a [u8]) -> Self {
+        Self::new(Opcode::Text, payload)
+    }
+
+    #[inline]
+    pub fn binary(payload: &'a [u8]) -> Self {
+        Self::new(Opcode::Binary, payload)
+    }
+
+    #[inline]
+    pub fn close(payload: &'a [u8]) -> Self {
+        Self::new(Opcode::Close, payload)
+    }
+
+    #[inline]
     pub fn opcode(self) -> Opcode {
         self.opcode
     }
