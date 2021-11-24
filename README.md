@@ -2,7 +2,7 @@
 
 #### 介绍
 
-Rust + [tokio](https://tokio.rs) 实现的异步 WebSocket 服务端 
+用 Rust 实现的异步 WebSocket 服务端
 
 #### 使用示例
 
@@ -51,3 +51,7 @@ async fn handle_client(mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
 
 - [examples/echo](https://gitee.com/luoshuqi/ws/blob/master/examples/echo.rs)
 - [examples/echo_html](https://gitee.com/luoshuqi/ws/blob/master/examples/echo_html.rs)
+
+实例
+
+- [网页终端](https://gitee.com/luoshuqi/web-terminal)
