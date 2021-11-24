@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 async fn handle_client(mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
     let mut buf = vec![0u8; 2048];
-    let req = Request::new(&mut stream, &mut buf).await?;
+    let req = Request::new(&mut stream, &mut buf, Duration::from_secs(60)).await?;
     let path = req.uri().split("?").next().unwrap();
     if path == "/" {
         let mut response = Response::bytes(OK, include_bytes!("echo_html.html"));

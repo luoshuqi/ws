@@ -1,4 +1,5 @@
 use std::error::Error;
+use std::time::Duration;
 
 use log::{debug, error, info};
 use tokio::net::{TcpListener, TcpStream};
@@ -26,7 +27,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 async fn handle_client(mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
     let mut buf = vec![0u8; 2048];
-    let req = Request::new(&mut stream, &mut buf).await?;
+    let req = Request::new(&mut stream, &mut buf, Duration::from_secs(60)).await?;
 
     let mut ws = match WebSocket::upgrade(&req, stream).await? {
         Some(ws) => ws,

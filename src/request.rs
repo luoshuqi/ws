@@ -7,8 +7,6 @@ use tokio::time::{sleep, Duration};
 
 use crate::error::Error;
 
-const REQUEST_READ_TIMEOUT: u64 = 60;
-
 #[derive(Debug)]
 pub struct Request<'a> {
     method: &'a str,
@@ -21,12 +19,13 @@ impl<'a> Request<'a> {
     pub async fn new(
         stream: &mut (impl AsyncRead + Unpin),
         buf: &'a mut [u8],
+        timeout: Duration,
     ) -> Result<Request<'a>, Error> {
         tokio::select! {
             req = read_request(stream, buf) => {
                 parse_request(req?)
             }
-            _ = sleep(Duration::from_secs(REQUEST_READ_TIMEOUT)) => error!("request read timeout"),
+            _ = sleep(timeout) => error!("request read timeout"),
         }
     }
 
