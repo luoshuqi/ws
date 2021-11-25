@@ -255,19 +255,17 @@ impl<T: AsyncRead + AsyncWrite + Unpin> WebSocket<T> {
                         self.payload.set_len(self.payload_len);
                     }
 
+                    self.read = 0;
+                    self.state = State::Start([0; 2]);
+
                     if self.fin {
                         //消息读取完成
                         let opcode = Opcode::new(self.opcode).unwrap();
                         let msg = Message::new(opcode, &self.payload);
-                        self.state = State::Start([0; 2]);
-                        self.read = 0;
                         self.opcode = OPCODE_CONTINUATION;
                         return Ok(Some(msg));
-                    } else {
-                        // 继续读取下个分片
-                        self.read = 0;
-                        self.state = State::Start([0; 2]);
                     }
+                    // 继续读取下个分片
                 }
             }
         }
