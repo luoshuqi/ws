@@ -55,3 +55,4 @@ async fn handle_client(mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
 实例
 
 - [网页终端](https://gitee.com/luoshuqi/web-terminal)
+- [通过 WebSocket 调用的 JSON-RPC](https://gitee.com/luoshuqi/jsonrpc)
