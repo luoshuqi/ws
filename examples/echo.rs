@@ -1,3 +1,4 @@
+use std::env::set_var;
 use std::error::Error;
 use std::time::Duration;
 
@@ -9,6 +10,7 @@ use ws::websocket::{Message, Opcode, WebSocket};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    set_var("RUST_LOG", "debug");
     env_logger::init();
 
     let listener = TcpListener::bind("127.0.0.1:0").await?;
